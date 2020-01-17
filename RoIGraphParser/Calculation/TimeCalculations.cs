@@ -6,7 +6,7 @@ using RoIGraphParser.Parsing;
 namespace RoIGraphParser.Calculation {
 	public static class TimeCalculations {
 		public static void CalcTimeToMarket(RecipeDatabase db) {
-			var product = db.GetByName("Doll");
+			var product = db.GetProductByName("Doll");
 			const double avgDist = (190d / 13d);
 			
 			var finalTime = (avgDist / 20) * product.Count + (product.Count - 1) * 0.5;
@@ -17,7 +17,7 @@ namespace RoIGraphParser.Calculation {
 		
 		public static void CalcOneProdTime(RecipeDatabase db) {
 			const string productName = "Car";
-			Console.WriteLine($"Production time of {productName}: {CalcProductionTime(db.GetByName(productName))}");
+			Console.WriteLine($"Production time of {productName}: {CalcProductionTime(db.GetProductByName(productName))}");
 		}
 		
 		public static void CalcAllProdTimes(RecipeDatabase db) {

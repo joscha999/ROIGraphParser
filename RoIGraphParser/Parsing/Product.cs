@@ -10,6 +10,6 @@ namespace RoIGraphParser.Parsing {
 		
 		public List<Ingredient> Ingredients { get; } = new List<Ingredient>();
 
-		public string BuildingName { get; set; }
+		public Building Building { get; set; }
 	}
 }

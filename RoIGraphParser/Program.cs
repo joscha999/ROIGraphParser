@@ -12,7 +12,16 @@ namespace RoIGraphParser {
 		public static void Main(string[] args) {
 			var db = GraphParser.Parse(true);
 			
-			TimeCalculations.CalcTimeToMarket(db);
+			//TimeCalculations.CalcTimeToMarket(db);
+
+			var p = db.Products["Doll"];
+			var result = BuildingCalculations.CalcNeededBuildings(p, 8);
+
+			foreach (var kvp in result.Buildings) {
+				Console.WriteLine();
+				Console.Write(kvp.Key);
+				Console.WriteLine($"Needed {kvp.Value} times");
+			}
 			
 			Console.WriteLine("Done!");
 		}

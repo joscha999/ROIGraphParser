@@ -1,17 +1,30 @@
-﻿using RoIGraphParser.Parsing;
+﻿using System;
+using System.Text;
+using RoIGraphParser.Parsing;
 
 namespace RoIGraphParser.Calculation {
 	public static class BuildingCalculations {
-		public static string CalNeededBuildings(Product p, int amount) {
+		public static ProductionChain CalcNeededBuildings(Product p, double amount, ProductionChain chain = null) {
 			//calc needed buildings to produce amount products per month
+			if (chain == null)
+				chain = new ProductionChain();
 			
 			//1. calc "myself" (building and time for p)
-			//1.1 normal => #buildings
-			//1.2 collector building => #buildings AND #collectors
-			
-			//2. foreach resource for p CalcNeededBuildings(resource, needed)
+			//count per cycle / (cycle time / 30)
+			var resourcePerMonth = p.Count / (p.Time / 30d);
+			var buildingsNeeded = amount / resourcePerMonth;
 
-			return "";
+			if (chain.Buildings.ContainsKey(p.Building))
+				chain.Buildings[p.Building] += buildingsNeeded;
+			else
+				chain.Buildings.Add(p.Building, buildingsNeeded);
+
+			//2. foreach resource for p CalcNeededBuildings(resource, needed)
+			foreach (var ingredient in p.Ingredients) {
+				CalcNeededBuildings(ingredient.Product, (ingredient.Count / (double)p.Count) * amount, chain);
+			}
+
+			return chain;
 		}
 	}
 }

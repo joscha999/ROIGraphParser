@@ -38,7 +38,10 @@ namespace RoIGraphParser.Parsing {
 
 						product.Count = result.amount;
 						product.Time = origin._gameDaysEasyChains;
-						product.BuildingName = node.originBuildings[0].buildingPanelName;
+						product.Building = db.AddOrGetBuilding(new Building {
+								BuildingName = node.originBuildings[0].buildingPanelName,
+								BaseCost = node.originBuildings[0].baseCost
+							});
 					}
 				} catch (Exception e) {
 					Console.WriteLine(e);
@@ -47,7 +50,7 @@ namespace RoIGraphParser.Parsing {
 
 			foreach (var product in db.Products.Values) {
 				foreach (var ingredient in product.Ingredients) {
-					var ip = db.GetByName(ingredient.Name);
+					var ip = db.GetProductByName(ingredient.Name);
 
 					if (ip == null) {
 						Console.WriteLine($"Could not find ingredient product: {ingredient}");
