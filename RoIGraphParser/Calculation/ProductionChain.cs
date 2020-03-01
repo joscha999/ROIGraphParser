@@ -3,6 +3,26 @@ using RoIGraphParser.Parsing;
 
 namespace RoIGraphParser.Calculation {
 	public class ProductionChain {
-		public Dictionary<Building, double> Buildings { get; } = new Dictionary<Building, double>();
+		public List<ProductionChainResource> ProductionChainResources { get; set; } = new List<ProductionChainResource>();
+
+		public void AddOrUpdate(Building building, double count, double buildingCount)
+		{
+			var item = ProductionChainResources.Find(i => i.Building == building);
+
+			if (item == null)
+			{
+				ProductionChainResources.Add(new ProductionChainResource
+				{
+					Building = building, 
+					BuildingCount = buildingCount,
+					Count = count
+				});
+			}
+			else
+			{
+				item.Count += count;
+				item.BuildingCount += buildingCount;
+			}
+		}
 	}
 }

@@ -14,10 +14,7 @@ namespace RoIGraphParser.Calculation {
 			var resourcePerMonth = p.Count / (p.Time / 30d);
 			var buildingsNeeded = amount / resourcePerMonth;
 
-			if (chain.Buildings.ContainsKey(p.Building))
-				chain.Buildings[p.Building] += buildingsNeeded;
-			else
-				chain.Buildings.Add(p.Building, buildingsNeeded);
+			chain.AddOrUpdate(p.Building, resourcePerMonth, buildingsNeeded);
 
 			//2. foreach resource for p CalcNeededBuildings(resource, needed)
 			foreach (var ingredient in p.Ingredients) {
