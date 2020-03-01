@@ -14,13 +14,10 @@ namespace RoIGraphParser {
 			
 			//TimeCalculations.CalcTimeToMarket(db);
 
-			var p = db.Products["Wooden Train"];
-			var result = BuildingCalculations.CalcNeededBuildings(p, 12);
+			var p = db.Products["Car"];
+			var result = BuildingCalculations.CalcNeededBuildings(p, 1);
 
-			foreach (var pcr in result.ProductionChainResources) {
-				Console.WriteLine();
-				Console.WriteLine(pcr);
-			}
+			Console.WriteLine(result);
 			
 			Console.WriteLine("Done!");
 		}

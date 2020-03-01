@@ -10,12 +10,18 @@ namespace RoIGraphParser.Calculation
     {
         public Building Building { get; set; }
 
-        public double Count { get; set; }
+        public double MonthlyProduction { get; set; }
 
+        public double MonthlyTotalProduction => MonthlyProduction * CeilBuildingCount;
+        
         public double BuildingCount { get; set; }
 
-        public double TotalCost => Building.BaseCost * Math.Ceiling(BuildingCount);
+        public double TotalCost => Building.BaseCost * CeilBuildingCount;
 
+        public double TotalUpkeep => Building.Upkeep * CeilBuildingCount;
+        
         public override string ToString() => this.ObjectToString();
+
+        private int CeilBuildingCount => (int)Math.Ceiling(BuildingCount);
     }
 }

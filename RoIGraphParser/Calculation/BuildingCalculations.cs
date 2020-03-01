@@ -5,6 +5,15 @@ using RoIGraphParser.Parsing;
 namespace RoIGraphParser.Calculation {
 	public static class BuildingCalculations {
 		public static ProductionChain CalcNeededBuildings(Product p, double amount, ProductionChain chain = null) {
+			if (chain == null)
+				chain = new ProductionChain();
+
+			CalcNeededBuildingsInternal(p, amount, chain);
+			chain.PostProcess();
+			return chain;
+		}
+		
+		private static ProductionChain CalcNeededBuildingsInternal(Product p, double amount, ProductionChain chain) {
 			//calc needed buildings to produce amount products per month
 			if (chain == null)
 				chain = new ProductionChain();
@@ -18,9 +27,9 @@ namespace RoIGraphParser.Calculation {
 
 			//2. foreach resource for p CalcNeededBuildings(resource, needed)
 			foreach (var ingredient in p.Ingredients) {
-				CalcNeededBuildings(ingredient.Product, (ingredient.Count / (double)p.Count) * amount, chain);
+				CalcNeededBuildingsInternal(ingredient.Product, (ingredient.Count / (double)p.Count) * amount, chain);
 			}
-
+			
 			return chain;
 		}
 	}
